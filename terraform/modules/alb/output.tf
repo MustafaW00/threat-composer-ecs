@@ -17,3 +17,13 @@ output "alb_zone_id" {
   description = "Zone ID of the ALB"
   value       = aws_lb.main.zone_id
 }
+
+output "alb_arn_suffix" {
+  description = "ARN suffix of the ALB"
+  value       = split("/", aws_lb.main.arn)[1]
+}
+
+output "target_group_arn_suffix" {
+  description = "ARN suffix of the target group"
+  value       = split(":", aws_lb_target_group.main.arn)[5]
+}
