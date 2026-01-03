@@ -12,15 +12,8 @@ resource "aws_ecs_cluster" "main" {
   }
 }
 
-# CloudWatch Log Group
-resource "aws_cloudwatch_log_group" "ecs" {
-  name              = "/ecs/${var.project_name}"
-  retention_in_days = 7
-
-  tags = {
-    Name = "${var.project_name}-logs"
-  }
-}
+# Get current region
+data "aws_region" "current" {}
 
 # ECS Task Definition
 resource "aws_ecs_task_definition" "app" {
@@ -44,7 +37,7 @@ resource "aws_ecs_task_definition" "app" {
     logConfiguration = {
       logDriver = "awslogs"
       options = {
-        "awslogs-group"         = aws_cloudwatch_log_group.ecs.name
+        "awslogs-group"         = "/ecs/${var.project_name}"
         "awslogs-region"        = data.aws_region.current.id
         "awslogs-stream-prefix" = "ecs"
       }
@@ -58,9 +51,6 @@ resource "aws_ecs_task_definition" "app" {
     Name = "${var.project_name}-task"
   }
 }
-
-# Get current region
-data "aws_region" "current" {}
 
 # ECS Service
 resource "aws_ecs_service" "app" {
