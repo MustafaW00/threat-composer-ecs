@@ -29,11 +29,13 @@ jobs:
         with:
           terraform_wrapper: false
 
-      - name: Terraform Init
+      - name: Terraform
+        working-directory: ./terraform
         run: terraform init
 
       - name: Get Terraform outputs
         id: tf-outputs
+        working-directory: ./terraform
         run: |
           echo "ecr_repo=$(terraform output -raw ecr_repository_url)" >> $GITHUB_OUTPUT
           echo "ecs_cluster=$(terraform output -raw ecs_cluster_name)" >> $GITHUB_OUTPUT
