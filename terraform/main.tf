@@ -1,4 +1,11 @@
 terraform {
+  backend "s3" {
+    bucket  = "threat-composer-tf-state-257394448066"
+    key     = "terraform.tfstate"
+    region  = "eu-west-2"
+    encrypt = true
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -46,7 +53,7 @@ module "alb" {
   public_subnet_ids     = module.vpc.public_subnet_ids
   alb_security_group_id = module.security_groups.alb_sg_id
   container_port        = 80
-  certificate_arn       = module.acm.certificate_arn # Add this line!
+  certificate_arn       = module.acm.certificate_arn
 }
 
 # Route 53 Module
@@ -82,12 +89,6 @@ resource "aws_ecr_repository" "app" {
   }
 }
 
-# Output ECR repository URL
-output "ecr_repository_url" {
-  description = "ECR repository URL"
-  value       = aws_ecr_repository.app.repository_url
-}
-
 # ECS Module
 module "ecs" {
   source = "./modules/ecs"
@@ -102,7 +103,6 @@ module "ecs" {
   desired_count         = 2
 }
 
-
 # Monitoring Module
 module "monitoring" {
   source = "./modules/monitoring"
@@ -115,8 +115,12 @@ module "monitoring" {
   target_group_arn_suffix = module.alb.target_group_arn_suffix
 }
 
+# Outputs
+output "ecr_repository_url" {
+  description = "ECR repository URL"
+  value       = aws_ecr_repository.app.repository_url
+}
 
-# Root outputs for CI/CD
 output "ecs_cluster_name" {
   description = "ECS cluster name"
   value       = module.ecs.cluster_name
