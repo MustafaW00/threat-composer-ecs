@@ -8,6 +8,13 @@ Infrastructure is currently offline. Deployment takes approximately five minutes
 
 ## Overview
 
+Architecture Diagram 
+
+
+<img width="1288" height="808" alt="Screenshot 2026-01-21 at 11 06 08" src="https://github.com/user-attachments/assets/1cb7d5a5-a894-47ef-be97-2aaefbf8bae1" />
+
+
+
 This project deploys AWS Threat Composer to production using:
 
 Terraform for infrastructure as code  
@@ -90,7 +97,7 @@ Build Docker image
 Push to ECR  
 Deploy to ECS
 
-<img width="1997" height="1348" alt="Untitled Diagram drawio" src="https://github.com/user-attachments/assets/937e09d4-a957-4d54-8a49-d85fe3bae7d0" />
+
 
 
 ## Project Structure
