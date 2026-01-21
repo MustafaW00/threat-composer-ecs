@@ -90,6 +90,9 @@ Build Docker image
 Push to ECR  
 Deploy to ECS
 
+<img width="1997" height="1348" alt="Untitled Diagram drawio" src="https://github.com/user-attachments/assets/937e09d4-a957-4d54-8a49-d85fe3bae7d0" />
+
+
 ## Project Structure
 
 .
